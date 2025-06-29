@@ -6,11 +6,13 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, Integ
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 from datetime import datetime
 from flask_babel import Babel, format_datetime # Importar Babel e format_datetime
+import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'sua_chave_secreta_aqui' # Mude para uma chave segura e complexa!
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'minha_chave_padrao_muito_insegura_para_dev' # Mude para uma chave segura e complexa!
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['DEBUG'] = False
 
 # Configuração do Flask-Babel
 app.config['BABEL_DEFAULT_LOCALE'] = 'pt_BR'
