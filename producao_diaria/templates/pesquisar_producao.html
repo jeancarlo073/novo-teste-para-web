@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %}Pesquisar Produção{% endblock %}
+
+{% block content %}
+    <h2 style="text-align: center; background-color: #A0C4B4; padding: 10px; border-radius: 8px;">Pesquisar Produção</h2>
+
+    <div class="container container-small">
+        <form method="GET" action="{{ url_for('pesquisar_producao') }}" class="search-form">
+            <div class="form-group">
+                {{ form.ciclo_ano.label }}
+                {{ form.ciclo_ano(class="form-control", value=ciclo_ano_previo) }}
+            </div>
+            <div class="form-group">
+                {{ form.bairro.label }}
+                {{ form.bairro(class="form-control", value=bairro_previo) }}
+            </div>
+            <div class="form-group button-group">
+                {{ form.submit(class="btn-primary") }}
+            </div>
+        </form>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <h3 style="text-align: center; margin-top: 30px;">Resultados da Pesquisa</h3>
+
+    {% if producoes %}
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data Reg.</th>
+                        <th>Bairro</th>
+                        <th>Nome</th>
+                        <th>Residência</th>
+                        <th>Comércio</th>
+                        <th>Terreno Baldio</th>
+                        <th>Ponto Estratégico</th>
+                        <th>Outros</th>
+                        <th>Ciclo/Ano</th>
+                        <th>NÚMERO</th>
+                        <th>TOTAL</th>
+                        <th>Eliminados</th>
+                        <th>Recusas</th>
+                        <th>Fechados</th>
+                        <th>Recuperados</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producao in producoes %}
+                    <tr>
+                        <td>{{ format_datetime(producao.data_registro, 'short') }}</td>
+                        <td>{{ producao.bairro }}</td>
+                        <td>{{ producao.nome }}</td>
+                        <td>{{ producao.residencia }}</td>
+                        <td>{{ producao.comercio }}</td>
+                        <td>{{ producao.terreno_baldio }}</td>
+                        <td>{{ producao.ponto_estrategico }}</td>
+                        <td>{{ producao.outros }}</td>
+                        <td>{{ producao.ciclo_ano }}</td>
+                        <td>{{ producao.numero }}</td>
+                        <td>{{ producao.total }}</td>
+                        <td>{{ producao.eliminados }}</td>
+                        <td>{{ producao.recusas }}</td>
+                        <td>{{ producao.fechados }}</td>
+                        <td>{{ producao.recuperados }}</td>
+                        <td>
+                            <form action="{{ url_for('excluir_producao', producao_id=producao.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir este registro?');">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p style="text-align: center; margin-top: 20px; font-size: 1.1em; color: #555;">
+            Nenhum registro de produção encontrado para os filtros aplicados, ou comece uma nova pesquisa.
+        </p>
+    {% endif %}
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{{ url_for('home') }}" class="btn-secondary">Voltar para Home</a>
+    </div>
+
+{% endblock %}

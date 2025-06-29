@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}Nova Produção{% endblock %}
+
+{% block content %}
+    <h2 style="text-align: center; background-color: #A0C4B4; padding: 10px; border-radius: 8px;">SISTEMA DE SALVAMENTO DE PRODUÇÃO</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <label for="bairro">BAIRRO:</label><br>
+                {{ form.bairro(class="form-input", placeholder="Nome do Bairro") }}
+                {% if form.bairro.errors %}<ul class="errors">{% for error in form.bairro.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+            <div>
+                <label for="ciclo_ano">CICLO/ANO:</label><br>
+                {{ form.ciclo_ano(class="form-input", placeholder="Ex: 2024/2025") }}
+                {% if form.ciclo_ano.errors %}<ul class="errors">{% for error in form.ciclo_ano.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+            <div>
+                <label for="nome">NOME:</label><br>
+                {{ form.nome(class="form-input", placeholder="Nome do Responsável") }}
+                {% if form.nome.errors %}<ul class="errors">{% for error in form.nome.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+            <div>
+                <label for="numero">NUMERO:</label><br>
+                {{ form.numero(class="form-input", placeholder="Número de Identificação") }}
+                {% if form.numero.errors %}<ul class="errors">{% for error in form.numero.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+
+            <div style="grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+                <h3 style="grid-column: 1 / -1; text-align: center; margin-top: 0;">Dados de Coleta</h3>
+                <div>
+                    <label for="residencia">RESIDENCIA:</label><br>
+                    {{ form.residencia(class="form-input", type="number", min="0") }}
+                    {% if form.residencia.errors %}<ul class="errors">{% for error in form.residencia.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+                <div>
+                    <label for="comercio">COMERCIO:</label><br>
+                    {{ form.comercio(class="form-input", type="number", min="0") }}
+                    {% if form.comercio.errors %}<ul class="errors">{% for error in form.comercio.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+                <div>
+                    <label for="terreno_baldio">TERRENO BALDIO:</label><br>
+                    {{ form.terreno_baldio(class="form-input", type="number", min="0") }}
+                    {% if form.terreno_baldio.errors %}<ul class="errors">{% for error in form.terreno_baldio.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+                <div>
+                    <label for="ponto_estrategico">PONTO ESTRATEGICO:</label><br>
+                    {{ form.ponto_estrategico(class="form-input", type="number", min="0") }}
+                    {% if form.ponto_estrategico.errors %}<ul class="errors">{% for error in form.ponto_estrategico.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+                <div>
+                    <label for="outros">OUTROS:</label><br>
+                    {{ form.outros(class="form-input", type="number", min="0") }}
+                    {% if form.outros.errors %}<ul class="errors">{% for error in form.outros.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+                <div style="background-color: #e0e0e0; padding: 10px; border-radius: 4px;">
+                    <strong>TOTAL:</strong> <span id="total-display">0</span>
+                </div>
+            </div>
+
+            <div style="grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+                <h3 style="grid-column: 1 / -1; text-align: center; margin-top: 0;">Status de Coleta</h3>
+                <div>
+                    <label for="eliminados">ELIMINADOS:</label><br>
+                    {{ form.eliminados(class="form-input", type="number", min="0") }}
+                    {% if form.eliminados.errors %}<ul class="errors">{% for error in form.eliminados.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+                <div>
+                    <label for="recusas">RECUSAS:</label><br>
+                    {{ form.recusas(class="form-input", type="number", min="0") }}
+                    {% if form.recusas.errors %}<ul class="errors">{% for error in form.recusas.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+                <div>
+                    <label for="fechados">FECHADOS:</label><br>
+                    {{ form.fechados(class="form-input", type="number", min="0") }}
+                    {% if form.fechados.errors %}<ul class="errors">{% for error in form.fechados.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+                <div>
+                    <label for="recuperados">RECUPERADOS:</label><br>
+                    {{ form.recuperados(class="form-input", type="number", min="0") }}
+                    {% if form.recuperados.errors %}<ul class="errors">{% for error in form.recuperados.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button type="button" onclick="limparCampos()" class="btn-action">LIMPAR CAMPOS</button>
+            {{ form.submit(class="btn-action") }}
+            <button type="button" onclick="window.location.href='{{ url_for('pesquisar_producao') }}'" class="btn-action">PESQUISAR</button>
+        </div>
+    </form>
+
+    <script>
+        // Função JavaScript para limpar os campos
+        function limparCampos() {
+            const form = document.querySelector('form');
+            form.reset(); // Reseta todos os campos do formulário
+            updateTotalDisplay(); // Reseta o total também
+        }
+
+        // Função JavaScript para calcular e exibir o total em tempo real
+        function updateTotalDisplay() {
+            const residencia = parseInt(document.querySelector('[name="residencia"]').value) || 0;
+            const comercio = parseInt(document.querySelector('[name="comercio"]').value) || 0;
+            const terreno_baldio = parseInt(document.querySelector('[name="terreno_baldio"]').value) || 0;
+            const ponto_estrategico = parseInt(document.querySelector('[name="ponto_estrategico"]').value) || 0;
+            const outros = parseInt(document.querySelector('[name="outros"]').value) || 0;
+            const total = residencia + comercio + terreno_baldio + ponto_estrategico + outros;
+            document.getElementById('total-display').innerText = total;
+        }
+
+        // Adicionar listeners de evento para atualizar o total ao digitar
+        document.addEventListener('DOMContentLoaded', () => {
+            const fields = ['residencia', 'comercio', 'terreno_baldio', 'ponto_estrategico', 'outros'];
+            fields.forEach(field => {
+                const input = document.querySelector(`[name="${field}"]`);
+                if (input) {
+                    input.addEventListener('input', updateTotalDisplay);
+                }
+            });
+            updateTotalDisplay(); // Inicializa o display do total
+        });
+    </script>
+
+    <style>
+        /* Estilos adicionais para o formulário, baseados na imagem */
+        body { background-color: #E6F0E6; /* Cor de fundo aproximada da imagem */ }
+        .container { background-color: #D3EADD; /* Cor de fundo do formulário */ border: none; box-shadow: none; padding: 25px; }
+        .form-input { width: calc(100% - 18px); padding: 8px; margin-bottom: 5px; border: 1px solid #aaa; border-radius: 4px; }
+        label { font-weight: bold; margin-bottom: 3px; display: block; color: #333; }
+        .btn-action {
+            background-color: #F0F0F0; /* Cor dos botões da imagem */
+            color: #333;
+            padding: 10px 20px;
+            border: 2px outset #ccc; /* Efeito 3D */
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 0 10px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.1s ease;
+        }
+        .btn-action:active {
+            border: 2px inset #ccc; /* Efeito ao clicar */
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        .btn-action:hover {
+            background-color: #E0E0E0;
+        }
+        .errors { color: red; font-size: 0.8em; list-style-type: none; padding-left: 0; margin-top: 2px; }
+    </style>
+{% endblock %}

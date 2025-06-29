@@ -1,0 +1,247 @@
+/* Estilos básicos para o corpo e o contêiner principal */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Cor de fundo padrão, será sobrescrita se a página tiver sua própria cor */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.container {
+    max-width: 900px; /* Aumentei um pouco para o formulário */
+    margin: 20px auto;.container {
+    max-width: 900px; /* Altere este valor para mais ou menos, conforme desejar */
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
+}
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex-grow: 1; /* Faz o container crescer para ocupar espaço disponível */
+}
+h1, h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilos para a navegação */
+nav {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Para alinhar os itens horizontalmente */
+    justify-content: center;
+}
+nav ul li {
+    position: relative; /* Para o alinhamento de itens "right" */
+    margin: 0 15px;
+}
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: background-color 0.3s ease;
+}
+nav ul li a:hover {
+    background-color: #555;
+    border-radius: 4px;
+}
+/* Estilos para alinhar itens à direita (Login, Registrar, Logout) */
+nav ul li.right {
+    margin-left: auto; /* Empurra para a direita */
+}
+/* Ajuste para ter os dois links à direita separados */
+nav ul li.right + li.right {
+    margin-left: 15px; /* Espaçamento entre os itens da direita */
+}
+
+/* Mensagens Flash */
+.flash-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}
+.flash-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.flash-message.danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.flash-message.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Estilos de rodapé */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto; /* Empurra o rodapé para baixo */
+}
+
+/* Estilos gerais para formulários */
+input[type="text"],
+input[type="password"],
+input[type="number"],
+.form-input { /* Nova classe para os campos do formulário de produção */
+    width: calc(100% - 18px); /* Ajuste para padding */
+    padding: 8px;
+    margin-bottom: 5px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    box-sizing: border-box; /* Garante que padding não aumente a largura total */
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 3px;
+    display: block;
+    color: #333;
+}
+
+/* Estilos para botões */
+input[type="submit"],
+.btn-action { /* Nova classe para os botões do formulário de produção */
+    background-color: #F0F0F0; /* Cor dos botões da imagem */
+    color: #333;
+    padding: 10px 20px;
+    border: 2px outset #ccc; /* Efeito 3D */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 0 10px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    transition: all 0.1s ease;
+}
+
+input[type="submit"]:hover,
+.btn-action:hover {
+    background-color: #E0E0E0;
+}
+
+.btn-action:active {
+    border: 2px inset #ccc; /* Efeito ao clicar */
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Estilos para mensagens de erro de formulário */
+.errors {
+    color: red;
+    font-size: 0.8em;
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 2px;
+}
+
+/* Cores de fundo específicas para as páginas */
+.body-login { background-color: #E6F0E6; } /* Exemplo: se login.html tivesse sua própria classe no body */
+.body-producao { background-color: #E6F0E6; } /* Cor de fundo aproximada da imagem de produção */
+
+
+/* Estilos específicos para o layout do formulário de produção (grid) */
+/* Este estilo pode ir para o style.css se quiser ou ficar no nova_producao.html */
+/* Eu recomendo deixar no style.css se for reusar, ou no HTML da página específica */
+.grid-container { /* Adicionei uma classe para o div principal de grid em nova_producao.html */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.grid-section { /* Para as seções "Dados de Coleta" e "Status de Coleta" */
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas para Dados de Coleta */
+    gap: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+.grid-section.status { /* Para a seção "Status de Coleta" com 2 colunas */
+    grid-template-columns: repeat(2, 1fr);
+}
+.grid-section h3 {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 0;
+}
+.total-display-box {
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* Estilos para tabelas */
+.table-container {
+    overflow-x: auto; /* Adiciona barra de rolagem horizontal se o conteúdo for maior que o contêiner */
+    margin-top: 20px;
+    border: 1px solid #ddd; /* Borda leve para o contêiner da tabela */
+    border-radius: 8px;
+    padding: 10px; /* Espaçamento interno */
+}
+
+table {
+    width: 100%; /* Faz a tabela ocupar 100% da largura do seu contêiner pai */
+    border-collapse: collapse; /* Remove o espaço entre as bordas das células */
+    margin-bottom: 20px; /* Espaço abaixo da tabela */
+    background-color: #fdfdfd; /* Fundo leve para a tabela */
+    font-size: 0.9em; /* Reduz um pouco o tamanho da fonte da tabela para caber mais */
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap; /* Impede que o texto quebre linha nas células da tabela */
+}
+
+table th {
+    background-color: #A0C4B4; /* Cor de fundo para o cabeçalho da tabela */
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Cor de fundo para linhas pares */
+}
+
+table tr:hover {
+    background-color: #e0e0e0; /* Efeito ao passar o mouse sobre a linha */
+}
+
+/* Estilo para botão de exclusão */
+.btn-delete {
+    background-color: #dc3545; /* Vermelho */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: background-color 0.3s ease;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}

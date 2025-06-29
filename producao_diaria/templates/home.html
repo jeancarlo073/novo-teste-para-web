@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Bem-vindo{% endblock %}
+
+{% block content %}
+    <h2 style="text-align: center; margin-top: 20px;">Bem-vindo(a), {{ username }}!</h2>
+    <p style="text-align: center;">Este é o sistema de salvamento de produção diária.</p>
+    <p style="text-align: center;">Use a navegação acima para:</p>
+    <ul style="list-style-type: none; padding: 0; text-align: center;">
+        <li><a href="{{ url_for('nova_producao') }}">Registrar Nova Produção</a></li>
+        <li><a href="{{ url_for('meus_dados_producao') }}">Ver Meus Dados de Produção</a></li>
+    </ul>
+{% endblock %}

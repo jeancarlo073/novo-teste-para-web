@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('nova_producao') }}">Nova Produção</a></li>
+            <li><a href="{{ url_for('meus_dados_producao') }}">Meus Dados</a></li>
+            {% if current_user.is_authenticated %}
+                <li class="right"><a href="{{ url_for('logout') }}">Logout</a></li>
+                <li class="right"><a>Olá, {{ current_user.username }}</a></li>
+            {% else %}
+                <li class="right"><a href="{{ url_for('login') }}">Login</a></li>
+                <li class="right"><a href="{{ url_for('register') }}">Registrar</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Sistema de Produção. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
