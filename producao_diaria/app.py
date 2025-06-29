@@ -6,7 +6,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 from datetime import datetime
-from flask_babel import Babel, format_datetime # Importar Babel e format_datetime
 
 
 app = Flask(__name__)
