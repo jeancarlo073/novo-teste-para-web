@@ -10,7 +10,7 @@ import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'minha_chave_padrao_muito_insegura_para_dev' # Mude para uma chave segura e complexa!
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['DEBUG'] = False
 
@@ -244,5 +244,10 @@ def excluir_producao(producao_id):
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+        # db.create_all() # CUIDADO: Este comando cria tabelas. Em produção, você fará isso uma vez.
+                          # Depois, pode usar ferramentas de migração como Alembic, mas para começar,
+                          # podemos rodar isso manualmente a primeira vez na Umbler, ou deixar aqui
+                          # se você tiver certeza que só será executado no primeiro deploy.
+                          # Para evitar recriações indesejadas, você pode removê-lo ou adicionar uma condição.
+        pass # Por enquanto, vamos manter apenas 'pass' aqui para não recriar localmente
+    app.run(debug=False) # Lembre-se de manter DEBUG=False em produção
