@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, url_for, flash, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
@@ -6,7 +7,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, Integ
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 from datetime import datetime
 from flask_babel import Babel, format_datetime # Importar Babel e format_datetime
-import os
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'minha_chave_padrao_muito_insegura_para_dev' # Mude para uma chave segura e complexa!
@@ -244,10 +245,6 @@ def excluir_producao(producao_id):
 
 if __name__ == '__main__':
     with app.app_context():
-        # db.create_all() # CUIDADO: Este comando cria tabelas. Em produção, você fará isso uma vez.
-                          # Depois, pode usar ferramentas de migração como Alembic, mas para começar,
-                          # podemos rodar isso manualmente a primeira vez na Umbler, ou deixar aqui
-                          # se você tiver certeza que só será executado no primeiro deploy.
-                          # Para evitar recriações indesejadas, você pode removê-lo ou adicionar uma condição.
-        pass # Por enquanto, vamos manter apenas 'pass' aqui para não recriar localmente
-    app.run(debug=False) # Lembre-se de manter DEBUG=False em produção
+        # db.create_all() # Comente ou remova esta linha para produção!
+        pass 
+    app.run(debug=False) # Certifique-se de que está False para deploy
